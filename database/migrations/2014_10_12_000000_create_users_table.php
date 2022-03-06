@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('photo_url');
-            $table->unsignedBigInteger('company_id');
-            $table->unsignedBigInteger('candidate_id');
+            $table->unsignedBigInteger('company_id')->nullable();
+            $table->unsignedBigInteger('candidate_id')->nullable();
             $table->timestamps();
         });
     }
