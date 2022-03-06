@@ -29,6 +29,12 @@ class RegisterController extends Controller
             'about' => 'required'
         ]);
 
+        // Check if there is same company already created
+        $company = Company::whereRaw( 'LOWER(`name`) LIKE ?', [ $request->name ] )->first();
+        if ($company) {
+            return back()->with('fail', $request->name.' company is already registered.');
+        }
+
         $company = new Company();
         $company->name = Str::ucfirst($request->name);
         $company->email = $request->email;

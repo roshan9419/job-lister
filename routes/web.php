@@ -36,8 +36,10 @@ Route::prefix('/register')->group(function () {
 
 
 // Company related routes
-// Route::prefix('/company')->group(function () {
-//     Route('/')
-// });
+Route::prefix('/company/{name_slug}')->group(function () {
+    Route::get('/dashboard', [Controllers\CompanyController::class, 'dashboard']);
+});
 
-// Route::get('/companies')
+// Route::get('companies', [Controllers\CompanyController::class, 'index']);
+
+//TODO: add middlewares
