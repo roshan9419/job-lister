@@ -24,7 +24,7 @@
           
           <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark min-vh-100" style="width: 280px; position: fixed;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-              <img src="{{ $company->photo_url }}" alt="" width="32" height="32" class="rounded-circle me-2">
+              <img src="{{ asset('storage/images/companies/'.$company->name_slug.'.jpg') }}" alt="" width="32" height="32" class="rounded-circle me-2">
               <span class="fs-4">{{ $company->name }}</span>
             </a>
             <hr>

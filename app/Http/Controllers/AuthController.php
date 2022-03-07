@@ -27,7 +27,7 @@ class AuthController extends Controller
                 // $request->session()->put('login_id', $dbUser->user_id);
                 
                 if ($dbUser->company_id) {
-                    return redirect('/company/dashboard');
+                    return redirect('/company/'.$dbUser->company_id.'/dashboard');
                 } else if ($dbUser->candidate_id) {
                     return redirect('/candidate/dashboard');
                 } else {

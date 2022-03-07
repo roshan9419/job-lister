@@ -26,15 +26,16 @@ class RegisterController extends Controller
             'website' => 'required',
             'country' => 'required',
             'state' => 'required',
-            'about' => 'required'
+            'about' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:1028'
         ]);
-
+        
         // Check if there is same company already created
         $company = Company::whereRaw( 'LOWER(`name`) LIKE ?', [ $request->name ] )->first();
         if ($company) {
             return back()->with('fail', $request->name.' company is already registered.');
         }
-
+        
         $company = new Company();
         $company->name = Str::ucfirst($request->name);
         $company->email = $request->email;
@@ -43,9 +44,12 @@ class RegisterController extends Controller
         $company->state = $request->state;
         $company->about = $request->about;
         $company->name_slug = Str::slug($request->name);
-        $company->photo_url = "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp";
-
+        
         $res = $company->save();
+
+        $destination_path = 'public/images/companies/';
+        $image_name = Str::slug($request->name).'.jpg';//.$request->image->extension();
+        $path = $request->file('image')->storeAs($destination_path, $image_name);
         if ($res) {
             return back()->with('success', 'You have registered successfully');
         } else {

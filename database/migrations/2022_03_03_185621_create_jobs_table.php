@@ -17,10 +17,9 @@ class CreateJobsTable extends Migration
             $table->id('job_id');
             $table->unsignedBigInteger('company_id');
             $table->string('company_name');
-            $table->string('company_photo_url');
             $table->string('title');
             $table->string('title_slug');
-            $table->string('description');
+            $table->text('description');
             $table->string('status');
             $table->string('external_apply_link')->nullable();
             $table->string('job_type');

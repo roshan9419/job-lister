@@ -15,7 +15,7 @@ class CreateCandidatesTable extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->id('candidate_id');
-            $table->string('about')->nullable();
+            $table->text('about')->nullable();
             $table->string('contact_number');
             $table->json('skills');
             $table->string('website');

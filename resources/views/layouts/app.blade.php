@@ -20,7 +20,7 @@
        <div class="font-sans text-gray-900 antialiased">
            <x-header></x-header>
            {{ $slot }}
-           <x-footer></x-footer>
+           {{-- <x-footer></x-footer> --}}
        </div>
     </body>
 </html>

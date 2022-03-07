@@ -21,8 +21,7 @@ class CreateCompaniesTable extends Migration
             $table->string('website');
             $table->string('country');
             $table->string('state');
-            $table->string('photo_url');
-            $table->string('about');
+            $table->text('about');
             $table->timestamps();
         });
     }
