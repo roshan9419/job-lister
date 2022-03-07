@@ -8,6 +8,12 @@ use App\Models\User;
 
 class CompanyController extends Controller
 {
+    public function listCompanies()
+    {
+        $companies = Company::all();
+        return view('companies', ['companies' => $companies]);
+    }
+
     public function dashboard(Request $request, $id_or_name_slug)
     {
         $tab = $request->query('tab');

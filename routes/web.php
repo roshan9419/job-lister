@@ -40,6 +40,6 @@ Route::prefix('/company/{name_slug}')->group(function () {
     Route::get('/dashboard', [Controllers\CompanyController::class, 'dashboard']);
 });
 
-// Route::get('companies', [Controllers\CompanyController::class, 'index']);
+Route::get('companies', [Controllers\CompanyController::class, 'listCompanies']);
 
 //TODO: add middlewares
