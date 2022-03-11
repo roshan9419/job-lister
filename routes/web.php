@@ -14,7 +14,7 @@ use App\Http\Controllers;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('home.index');
 });
 
 
@@ -27,19 +27,22 @@ Route::get('/auth/google/callback', [Controllers\AuthController::class, 'googleC
 Route::prefix('/register')->group(function () {
     Route::get('/', [Controllers\RegisterController::class, 'index']);
     
-    Route::get('/company', [Controllers\RegisterController::class, 'company']);
-    Route::post('/company', [Controllers\RegisterController::class, 'registerCompany']);
+    Route::get('/company', [Controllers\CompanyController::class, 'form']);
+    Route::post('/company', [Controllers\CompanyController::class, 'register']);
     
-    Route::get('/candidate', [Controllers\RegisterController::class, 'candidate']);
-    Route::post('/candidate', [Controllers\RegisterController::class, 'registerCandidate']);
+    Route::get('/candidate', [Controllers\CandidateController::class, 'form']);
+    Route::post('/candidate', [Controllers\CandidateController::class, 'register']);
 });
-
 
 // Company related routes
 Route::prefix('/company/{name_slug}')->group(function () {
     Route::get('/dashboard', [Controllers\CompanyController::class, 'dashboard']);
 });
 
-Route::get('companies', [Controllers\CompanyController::class, 'listCompanies']);
+// Jobs related routes
+Route::get('jobs', [Controllers\JobController::class, 'listJobs']);
+Route::post('createJob', [Controllers\JobController::class, 'createJobPost']);
+
+Route::get('companies', [Controllers\HomeController::class, 'listCompanies']);
 
 //TODO: add middlewares
