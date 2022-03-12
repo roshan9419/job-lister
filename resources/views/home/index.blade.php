@@ -1,7 +1,8 @@
 <x-app-layout>
-    @if (session('name'))
-        <div>Welcome, {{ session('name') }}!</div>
-        <img src="https://lh3.googleusercontent.com/a-/AOh14GiXxLzoHgbOzM8gSPuVDUI4aiIme-HzeEeaWuix-A=s96-c" alt="">
+    @include('components.header')
+    @if (session('user'))
+        <div>Welcome, {{ session('user')->name }}!</div>
+        <img src="{{ session('user')->photo_url }}" alt="">
     @else
         <div>Welcome to Job Lister!</div>
     @endif

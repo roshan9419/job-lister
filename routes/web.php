@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('home.index');
 });
 
+Route::get('/auth/login', [Controllers\AuthController::class, 'googleLogin'])->name('auth.login');
 
-Route::get('/auth/google', [Controllers\AuthController::class, 'googleLogin'])
-    ->name('login.google');
+Route::get('/auth/logout', [Controllers\AuthController::class, 'logout'])->name('auth.logout');
 
 Route::get('/auth/google/callback', [Controllers\AuthController::class, 'googleCallback']);
 

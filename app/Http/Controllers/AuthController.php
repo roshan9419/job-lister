@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
-use Session;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -23,6 +23,9 @@ class AuthController extends Controller
             $dbUser = User::where('google_id', $user->id)->first();
             if ($dbUser) {
                 // existing user - login
+                Auth::login($dbUser);
+                Session::put('user', $dbUser);
+                return redirect('/');
                 // Auth::login($dbUser);
                 // $request->session()->put('login_id', $dbUser->user_id);
                 
@@ -42,7 +45,8 @@ class AuthController extends Controller
                 $newUser->photo_url = $user->avatar;
                 $newUser->save();
 
-                // Auth::login($newUser);
+                Auth::login($newUser);
+                return view('home.index');
                 // return redirect('/')->with('name', $newUser->name);
                 // $request->session()->put('login_id', $newUser->user_id);
                 return redirect('/register');
@@ -50,5 +54,11 @@ class AuthController extends Controller
         } catch (Exception $e) {
             dd($e->getMessage());
         }
+    }
+
+    public function logout()
+    {
+        Session::remove('user');
+        return redirect('/');
     }
 }
