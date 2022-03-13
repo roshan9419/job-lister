@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -23,12 +22,7 @@ class AuthController extends Controller
             $dbUser = User::where('google_id', $user->id)->first();
             if ($dbUser) {
                 // existing user - login
-                Auth::login($dbUser);
                 Session::put('user', $dbUser);
-                return redirect('/');
-                // Auth::login($dbUser);
-                // $request->session()->put('login_id', $dbUser->user_id);
-                
                 if ($dbUser->company_id) {
                     return redirect('/company/'.$dbUser->company_id.'/dashboard');
                 } else if ($dbUser->candidate_id) {
@@ -43,12 +37,9 @@ class AuthController extends Controller
                 $newUser->name = $user->name;
                 $newUser->email = $user->email;
                 $newUser->photo_url = $user->avatar;
+                
                 $newUser->save();
-
-                Auth::login($newUser);
-                return view('home.index');
-                // return redirect('/')->with('name', $newUser->name);
-                // $request->session()->put('login_id', $newUser->user_id);
+                Session::put('user', $newUser);
                 return redirect('/register');
             }
         } catch (Exception $e) {

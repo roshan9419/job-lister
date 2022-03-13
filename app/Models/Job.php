@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     use HasFactory;
+    protected $primaryKey = "job_id";
+
     protected $casts = [
         'job_locations' => 'array',
         'skills_required' => 'array',

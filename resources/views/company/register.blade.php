@@ -1,4 +1,5 @@
 <x-app-layout>
+  <x-header></x-header>
   <section class="vh-100" style="background-color: #eee;">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -11,15 +12,14 @@
                   <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up | Provide your company details</p>
 
                   <form class="mx-1 mx-md-4" action="/register/company" method="POST" enctype="multipart/form-data">
-
                     @csrf
+                    
                     @if(Session::has('success'))
-                    <div class="alert alert-success">{{Session::get('success')}}</div>
+                      <div class="alert alert-success">{{Session::get('success')}}</div>
                     @endif
                     @if(Session::has('fail'))
-                    <div class="alert alert-danger">{{Session::get('fail')}}</div>
+                      <div class="alert alert-danger">{{Session::get('fail')}}</div>
                     @endif
-                    @csrf
 
                     <div class="d-flex flex-row align-items-center mb-2">
                       {{-- <i class="fas fa-user fa-lg me-3 fa-fw"></i> --}}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 use App\Models\Company;
 use App\Models\User;
 
@@ -17,6 +18,12 @@ class CompanyController extends Controller
 
     public function register(Request $request)
     {
+        $user_id = Session::get('user')->user_id;
+        // $user = User::where('user_id', $user_id)->id)->first();
+        if (!$user_id) {
+            return redirect(route('auth.login'));
+        }
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:companies',
@@ -47,7 +54,14 @@ class CompanyController extends Controller
         $destination_path = 'public/images/companies/';
         $image_name = Str::slug($request->name).'.jpg';//.$request->image->extension();
         $path = $request->file('image')->storeAs($destination_path, $image_name);
+        
         if ($res) {
+            $user = User::where('user_id', $user_id)->first();
+            $user->company_id = $company->company_id;
+            $user->save();
+            // udpate user object in session
+            Session::put('user', $user);
+            
             return back()->with('success', 'You have registered successfully');
         } else {
             return back()->with('fail', 'Something went wrong');
@@ -60,19 +74,13 @@ class CompanyController extends Controller
         if (!$tab) $tab = 'profile';
 
         $company = is_numeric($id_or_name_slug) 
-            ? Company::where('company_id', '=', $id_or_name_slug)->first()
-            : Company::where('name_slug', '=', $id_or_name_slug)->first();
+            ? Company::where('company_id', $id_or_name_slug)->first()
+            : Company::where('name_slug', $id_or_name_slug)->first();
 
-        $company = Company::where('name_slug', '=', $id_or_name_slug)->first();
         if (!$company) {
             return redirect('404');
         }
 
-        $user = User::where('company_id', '=', $company->company_id)->first();
-        if (!$user) {
-            return redirect('404');
-        }
-
-        return view('company.dashboard', ['company' => $company, 'user' => $user, 'tab' => $tab]);
+        return view('company.dashboard', ['company' => $company, 'tab' => $tab]);
     }
 }
