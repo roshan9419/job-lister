@@ -11,7 +11,6 @@ class Job extends Model
     protected $primaryKey = "job_id";
 
     protected $casts = [
-        'job_locations' => 'array',
         'skills_required' => 'array',
         'applicants' => 'array'
     ];

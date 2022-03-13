@@ -75,8 +75,7 @@
                       {{-- <i class="fas fa-user fa-lg me-3 fa-fw"></i> --}}
                       <div class="form-outline flex-fill mb-0">
                         <label class="form-label" for="form3Example1c">About</label>
-                        <textarea class="form-control" id="form3Example1c" name="about" rows=3
-                          value="{{ old('about') }}"></textarea>
+                        <textarea class="form-control" id="form3Example1c" name="about" rows=3>{{ old('about') }}</textarea>
                         <span class="text-danger">@error('about') {{$message}} @enderror</span>
                       </div>
                     </div>

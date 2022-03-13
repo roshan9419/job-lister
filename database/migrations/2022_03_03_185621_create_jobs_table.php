@@ -16,22 +16,22 @@ class CreateJobsTable extends Migration
         Schema::create('jobs', function (Blueprint $table) {
             $table->id('job_id');
             $table->unsignedBigInteger('company_id');
-            $table->string('company_name');
             $table->string('title');
             $table->string('title_slug');
             $table->text('description');
             $table->string('status');
             $table->string('external_apply_link')->nullable();
             $table->string('job_type');
-            $table->json('job_locations');
+            $table->string('job_location');
+            $table->string('location_type'); //Remote, on-site, hybrid
             $table->json('skills_required');
-            $table->json('applicants')->nullable();
+            $table->json('applicants')->nullable(); //candidateIds
             $table->integer('total_vacancies')->nullable();
             $table->integer('experience');
             $table->integer('start_salary')->nullable();
             $table->integer('end_salary')->nullable();
             $table->integer('duration')->nullable();
-            $table->timestamp('apply_last_date');
+            $table->date('apply_last_date')->nullable();
             $table->timestamps();
         });
     }
