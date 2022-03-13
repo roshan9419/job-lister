@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use App\Models\Company;
+use App\Models\Job;
 use App\Models\User;
 
 class CompanyController extends Controller
@@ -83,6 +84,17 @@ class CompanyController extends Controller
         }
 
         $company = Company::findOrFail($user->company_id);
-        return view('company.dashboard', ['company' => $company, 'tab' => $tab]);
+        
+        $data = [
+            'company' => $company,
+            'tab' => $tab
+        ];
+        
+        if ($tab == "jobs-posted") {
+            $jobs = Job::all();
+            $data['jobs'] = $jobs;
+        }
+
+        return view('company.dashboard', $data);
     }
 }

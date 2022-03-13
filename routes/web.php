@@ -41,7 +41,7 @@ Route::get('/company/dashboard', [Controllers\CompanyController::class, 'dashboa
 Route::get('/companies', [Controllers\HomeController::class, 'listCompanies'])->name('companies.list');
 
 // Jobs related routes
-Route::get('/job/{jobId}/{slug}', [Controllers\JobController::class, 'viewJobPost'])->name('job.view');
+Route::get('/job/{job_id}/{slug}', [Controllers\JobController::class, 'viewJobPost'])->name('job.view');
 Route::post('/job', [Controllers\JobController::class, 'createJobPost'])->name('job.create');
 Route::get('/jobs', [Controllers\JobController::class, 'listJobs']);
 

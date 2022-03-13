@@ -55,12 +55,11 @@
             @include('company.profile')
             @break
           @case('jobs-posted')
-            <div>Nothing yet, comming soon!</div>
+            @include('company.jobs')
             @break
           @case('create-job')
             @include('company.createjob')
-            {{-- <div>Nothing yet, comming soon!</div> --}}
-          @break
+            @break
         @endswitch
 
       </div>

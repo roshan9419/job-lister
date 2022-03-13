@@ -64,4 +64,9 @@ class JobController extends Controller
         return view('jobs.list', ['jobs' => $jobs]);
     }
 
+    public function viewJobPost($job_id, $slug)
+    {
+
+    }
+
 }
