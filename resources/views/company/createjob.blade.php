@@ -33,7 +33,7 @@
       <label class="form-label" for="jobTypeInput">What is the Job Type?</label>
       <select class="form-control" id="jobTypeInput" name="job_type" >
         <option value="Internship">Internship</option>
-        <option value="Full-time Job">Full-time Job</option>
+        <option value="Full-time">Full-time</option>
       </select>
     </div>
 

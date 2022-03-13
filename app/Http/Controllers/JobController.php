@@ -66,7 +66,9 @@ class JobController extends Controller
 
     public function viewJobPost($job_id, $slug)
     {
-
+        $job = Job::findOrFail($job_id);
+        return view('jobs.view', ['job' => $job]);
     }
 
 }
+// REVIEW, LIVE, CLOSED
