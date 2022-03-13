@@ -24,7 +24,7 @@ class AuthController extends Controller
                 // existing user - login
                 Session::put('user', $dbUser);
                 if ($dbUser->company_id) {
-                    return redirect('/company/'.$dbUser->company_id.'/dashboard');
+                    return redirect(route('company.dashboard'));
                 } else if ($dbUser->candidate_id) {
                     return redirect('/candidate/dashboard');
                 } else {

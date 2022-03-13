@@ -68,19 +68,21 @@ class CompanyController extends Controller
         }
     }
 
-    public function dashboard(Request $request, $id_or_name_slug)
+    public function dashboard(Request $request)
     {
         $tab = $request->query('tab');
         if (!$tab) $tab = 'profile';
 
-        $company = is_numeric($id_or_name_slug) 
-            ? Company::where('company_id', $id_or_name_slug)->first()
-            : Company::where('name_slug', $id_or_name_slug)->first();
-
-        if (!$company) {
-            return redirect('404');
+        $user = Session::get('user');
+        if (!$user) {
+            return redirect(route('auth.login'));
         }
 
+        if (!$user->company_id) {
+            return redirect(route('company.register'));
+        }
+
+        $company = Company::findOrFail($user->company_id);
         return view('company.dashboard', ['company' => $company, 'tab' => $tab]);
     }
 }

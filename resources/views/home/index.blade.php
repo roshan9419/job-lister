@@ -6,7 +6,7 @@
             <img src="{{ session('user')->photo_url }}" alt="">
 
             @if (isset(session('user')->company_id))
-                <a href="/company/{{session('user')->company_id}}/dashboard" class="btn btn-outline-primary">Go to Dashboard</a>
+                <a href="{{ route('company.dashboard') }}" class="btn btn-outline-primary">Go to Dashboard</a>
             @endif
 
         @else
