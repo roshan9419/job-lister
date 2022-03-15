@@ -39,7 +39,7 @@
             <span class="title-heading">{{ $job->title }}</span>
             <a href="#" class="apply-btn">Apply Now</a>
         </div>
-        <h3>{{ $job->job_location }}, ({{ $job->location_type }})</h3>
+        <h3>{{ $job->job_location }} ({{ $job->location_type }})</h3>
         <div class="mb-5"></div>
 
         <h5>Skills Required</h5>

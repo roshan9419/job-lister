@@ -91,7 +91,7 @@ class CompanyController extends Controller
         ];
         
         if ($tab == "jobs-posted") {
-            $jobs = Job::where('company_id', $company->company_id)->get();
+            $jobs = Job::where('company_id', $company->company_id)->latest()->get();
             $data['jobs'] = $jobs;
         }
 

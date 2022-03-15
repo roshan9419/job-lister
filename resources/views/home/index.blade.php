@@ -1,5 +1,5 @@
 <x-app-layout>
-    @include('components.header')
+    <x-header></x-header>
     <div class="container">
         @if (session('user'))
             <div>Welcome, {{ session('user')->name }}!</div>

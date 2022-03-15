@@ -58,6 +58,13 @@ class JobController extends Controller
 
     }
 
+    public function closeJob($job_id) {
+        $job = Job::findOrFail($job_id);
+        $job->status = "CLOSED";
+        $job->save();
+        return back()->with('success', 'Job status updated');
+    }
+
     public function listJobs()
     {
         $jobs = Job::all();

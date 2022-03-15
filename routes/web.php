@@ -41,9 +41,10 @@ Route::get('/company/dashboard', [Controllers\CompanyController::class, 'dashboa
 Route::get('/companies', [Controllers\HomeController::class, 'listCompanies'])->name('companies.list');
 
 // Jobs related routes
-Route::get('/job/{job_id}/{slug}', [Controllers\JobController::class, 'viewJobPost'])->name('job.view');
-Route::post('/job', [Controllers\JobController::class, 'createJobPost'])->name('job.create');
 Route::get('/jobs', [Controllers\JobController::class, 'listJobs']);
+Route::get('/job/{job_id}/{slug}', [Controllers\JobController::class, 'viewJobPost'])->name('job.view');
+Route::post('/job/create', [Controllers\JobController::class, 'createJobPost'])->name('job.create');
+Route::put('/job/{job_id}/close', [Controllers\JobController::class, 'closeJob'])->name('job.close');
 
 
 //TODO: add middlewares
