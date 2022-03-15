@@ -5,7 +5,9 @@
     </a>
     @if (session('user'))
       <div style="margin-left: auto">
-        <a class="btn btn-danger" href="{{ route('auth.logout') }}">LogOut</a>
+        @component('components.smallphoto', ['url' => session('user')->photo_url])
+        @endcomponent
+        <a class="btn btn-danger" href="{{ route('auth.logout') }}">Logout</a>
       </div>
     @else
       <div style="margin-left: auto">

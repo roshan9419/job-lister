@@ -53,4 +53,5 @@
             {{ $job->description }}
         </div>
     </div>
+    
 </x-app-layout>

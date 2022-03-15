@@ -36,14 +36,14 @@ class JobController extends Controller
 
         $job->company_id = $request->session()->get('user')->company_id;
         $job->status = 'REVIEW';
-        
-        if($request->external_apply_link)
+
+        if ($request->external_apply_link)
             $job->external_apply_link = $request->external_apply_link;
-        if($request->total_vacancies)
+        if ($request->total_vacancies)
             $job->total_vacancies = (int)$request->total_vacancies;
-        if($request->start_salary)
+        if ($request->start_salary)
             $job->start_salary = (int)$request->start_salary;
-        if($request->end_salary)
+        if ($request->end_salary)
             $job->end_salary = (int)$request->end_salary;
 
         // return dd($job);
@@ -55,19 +55,42 @@ class JobController extends Controller
         } else {
             return back()->with('fail', 'Something went wrong');
         }
-
     }
 
-    public function closeJob($job_id) {
+    public function closeJob($job_id)
+    {
         $job = Job::findOrFail($job_id);
         $job->status = "CLOSED";
         $job->save();
         return back()->with('success', 'Job status updated');
     }
 
-    public function listJobs()
+    public function getLatestJobs()
     {
         $jobs = Job::all();
+        return $jobs;
+    }
+
+    public function searchJobs(Request $req)
+    {
+
+        $jobs = Job::where('status', 'REVIEW')->latest()->get();
+        if ($req->has('q')) {
+            $query =  strtolower($req->get('q'));
+            $jobs = $jobs->filter(function ($job) use ($query) {
+                $skills = join(" ", $job->skills_required);
+                if (
+                    Str::contains(strtolower($job->title), $query) ||
+                    Str::contains(strtolower($skills), $query) ||
+                    Str::contains(strtolower($job->job_location), $query) ||
+                    Str::contains(strtolower($job->location_type), $query)
+                ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        }
         return view('jobs.list', ['jobs' => $jobs]);
     }
 
@@ -76,6 +99,5 @@ class JobController extends Controller
         $job = Job::findOrFail($job_id);
         return view('jobs.view', ['job' => $job]);
     }
-
 }
 // REVIEW, LIVE, CLOSED
