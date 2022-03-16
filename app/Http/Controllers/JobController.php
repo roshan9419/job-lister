@@ -65,10 +65,11 @@ class JobController extends Controller
         return back()->with('success', 'Job status updated');
     }
 
-    public function getLatestJobs()
+    public function listJobs()
     {
         $jobs = Job::all();
-        return $jobs;
+        $companies = $this->getCompaniesData($jobs);
+        return view('jobs.list', ['jobs' => $jobs, 'companies' => $companies]);
     }
 
     public function searchJobs(Request $req)
@@ -91,13 +92,28 @@ class JobController extends Controller
                 }
             });
         }
-        return view('jobs.list', ['jobs' => $jobs]);
+        $companies = $this->getCompaniesData($jobs);
+        return view('jobs.list', ['jobs' => $jobs, 'companies' => $companies]);
     }
 
     public function viewJobPost($job_id, $slug)
     {
         $job = Job::findOrFail($job_id);
-        return view('jobs.view', ['job' => $job]);
+        $company = $this->getCompaniesData([$job])[$job->company_id];
+        return view('jobs.view', ['job' => $job, 'company' => $company]);
+    }
+
+    private function getCompaniesData($jobs)
+    {
+        $companies = array();
+        foreach ($jobs as $idx => $job) {
+            $c_id = $job->company_id;
+            if (!array_key_exists($c_id, $companies)) {
+                $company = Company::where('company_id', $c_id)->first();
+                $companies[$c_id] = $company;
+            }
+        }
+        return $companies;
     }
 }
 // REVIEW, LIVE, CLOSED

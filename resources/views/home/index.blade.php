@@ -89,6 +89,10 @@
             width: 1px;
             font-size: 0%;
         }
+
+        .heading {
+            color: #374054;
+        }
     </style>
 
     <x-header></x-header>
@@ -131,8 +135,12 @@
 
     @include('home.skills')
 
-    <h1>Recent Jobs Posted</h1>
-    <hr>
-    @include('jobs.list')
+    <div class="container">
+        <center><h2 class="heading">Recent job openings</h2></center>
+        @include('jobs.list')
+        <a href="{{ route('jobs.list') }}" class="btn btn-primary">See all Jobs</a>
+    </div>
+
+    <x-footer></x-footer>
 
 </x-app-layout>
