@@ -1,4 +1,5 @@
 <x-app-layout>
+    <x-header></x-header>
 
     <style>
         #lead {
@@ -9,7 +10,6 @@
             background: url("/images/assets/lead-bg.jpg");
             background-size: cover;
             padding: 15px;
-            overflow: hidden;
             background-attachment: fixed;
         }
 
@@ -95,21 +95,6 @@
         }
     </style>
 
-    <x-header></x-header>
-    {{-- <div class="container">
-        @if (session('user'))
-        <div>Welcome, {{ session('user')->name }}!</div>
-        <img src="{{ session('user')->photo_url }}" alt="">
-
-        @if (isset(session('user')->company_id))
-        <a href="{{ route('company.dashboard') }}" class="btn btn-outline-primary">Go to Dashboard</a>
-        @endif
-
-        @else
-        <div>Welcome to Job Lister!</div>
-        @endif
-        <br>
-    </div> --}}
 
     <div id="lead">
         <div id="lead-content">

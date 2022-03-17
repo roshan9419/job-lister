@@ -9,3 +9,4 @@ slider.oninput = function() {
 
 // Data Picker Initialization
 $('.applyLastDate').datepicker();
+// TODO: adding js file specific
