@@ -19,12 +19,6 @@ class CompanyController extends Controller
 
     public function register(Request $request)
     {
-        $user_id = Session::get('user')->user_id;
-        // $user = User::where('user_id', $user_id)->id)->first();
-        if (!$user_id) {
-            return redirect(route('auth.login'));
-        }
-
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:companies',
@@ -57,6 +51,7 @@ class CompanyController extends Controller
         $path = $request->file('image')->storeAs($destination_path, $image_name);
         
         if ($res) {
+            $user_id = Session::get('user')->user_id;
             $user = User::where('user_id', $user_id)->first();
             $user->company_id = $company->company_id;
             $user->save();
@@ -75,9 +70,6 @@ class CompanyController extends Controller
         if (!$tab) $tab = 'profile';
 
         $user = Session::get('user');
-        if (!$user) {
-            return redirect(route('auth.login'));
-        }
 
         if (!$user->company_id) {
             return redirect(route('company.register'));

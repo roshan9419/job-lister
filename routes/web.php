@@ -24,19 +24,25 @@ Route::get('/auth/logout', [Controllers\AuthController::class, 'logout'])->name(
 Route::get('/auth/google/callback', [Controllers\AuthController::class, 'googleCallback']);
 
 // Restiration routes
-Route::prefix('/register')->group(function () {
-    Route::get('/', [Controllers\RegisterController::class, 'index']);
+Route::middleware('auth')->prefix('/register')->group(function () {
+    Route::get('/', [Controllers\RegisterController::class, 'index'])->middleware(['company', 'candidate']);
 
-    Route::get('/company', [Controllers\CompanyController::class, 'form']);
-    Route::post('/company', [Controllers\CompanyController::class, 'register'])->name('company.register');
+    Route::middleware('company')->group(function () {
+        Route::get('/company', [Controllers\CompanyController::class, 'form']);
+        Route::post('/company', [Controllers\CompanyController::class, 'register'])->name('company.register');
+    });
 
-    Route::get('/candidate', [Controllers\CandidateController::class, 'form']);
-    Route::post('/candidate', [Controllers\CandidateController::class, 'register'])->name('candidate.register');
+    Route::middleware('candidate')->group(function () {
+        Route::get('/candidate', [Controllers\CandidateController::class, 'form']);
+        Route::post('/candidate', [Controllers\CandidateController::class, 'register'])->name('candidate.register');
+    });
 });
+
 
 // Company related routes
 Route::get('/company/dashboard', [Controllers\CompanyController::class, 'dashboard'])->name('company.dashboard');
 Route::get('/companies', [Controllers\HomeController::class, 'listCompanies'])->name('companies.list');
+Route::get('/company/{name_slug}/profile', [Controllers\HomeController::class, 'companyProfile'])->name('company.profile');
 
 // Jobs related routes
 Route::get('/job/{job_id}/{slug}', [Controllers\JobController::class, 'viewJobPost'])->name('job.view');
