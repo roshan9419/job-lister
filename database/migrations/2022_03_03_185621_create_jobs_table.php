@@ -20,12 +20,13 @@ class CreateJobsTable extends Migration
             $table->string('title_slug');
             $table->text('description');
             $table->string('status');
-            $table->string('external_apply_link')->nullable();
+            $table->text('external_apply_link')->nullable();
             $table->string('job_type');
             $table->string('job_location');
             $table->string('location_type'); //Remote, on-site, hybrid
             $table->json('skills_required');
-            $table->json('applicants')->nullable(); //candidateIds
+            $table->string('category_id');
+            $table->json('applicants')->nullable(); //applicationIds
             $table->integer('total_vacancies')->nullable();
             $table->integer('experience');
             $table->integer('start_salary')->nullable();

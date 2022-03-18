@@ -15,11 +15,14 @@ class CreateCandidatesTable extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->id('candidate_id');
-            $table->text('about')->nullable();
-            $table->string('contact_number')->nullable();
-            $table->json('skills')->nullable();
-            $table->string('website')->nullable();
+            $table->string('name');
+            $table->json('skills'); //at-least 1
+            $table->text('resume_link');
             $table->json('social_links')->nullable();
+            $table->text('about')->nullable();
+            $table->string('website')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('alternate_email')->nullable();
             $table->timestamps();
         });
     }

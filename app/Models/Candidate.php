@@ -10,6 +10,7 @@ class Candidate extends Model
     use HasFactory;
     protected $primaryKey = "candidate_id";
     protected $casts = [
-        'skills' => 'array'
+        'skills' => 'array',
+        'social_links' => 'array'
     ];
 }

@@ -15,10 +15,25 @@ class CandidateController extends Controller
         return view('candidate.register');
     }
 
-    public function register()
+    public function register(Request $request)
     {
-        
+        $request->validate([
+            'name' => 'required',
+            'skills' => 'required',
+            'resume_link' => 'required',
+        ]);
+
         $candidate = new Candidate();
+        
+        $candidate->name = $request->name;
+        $candidate->skills = explode(',', $request->skills);
+        $candidate->resume_link = $request->resume_link;
+        if ($request->about) $candidate->about = $request->about;
+        if ($request->website) $candidate->website = $request->website;
+        if ($request->contact_number) $candidate->contact_number = $request->contact_number;
+        if ($request->social_links) $candidate->social_links = $request->social_links;
+        if ($request->alternate_email) $candidate->alternate_email = $request->alternate_email;
+
         $res = $candidate->save();
         if ($res) {
             $user_id = Session::get('user')->user_id;
@@ -34,22 +49,25 @@ class CandidateController extends Controller
         }
     }
 
-    public function updateDetails(Request $request)
+    public function dashboard(Request $request)
     {
-        $candidate_id = Session::get('user')->candidate_id;
-        $candidate = Candidate::findOrFail($candidate_id);
+        $tab = $request->query('tab');
+        if (!$tab) $tab = 'profile';
 
-        if ($request->about) $candidate->about = $request->about;
-        if ($request->contact_number) $candidate->contact_number = $request->contact_number;
-        if ($request->skills) $candidate->skills = explode(',', $request->skills);
-        if ($request->website) $candidate->website = $request->website;
-        if ($request->social_links) $candidate->social_links = $request->social_links;
+        $user = Session::get('user');
 
-        $res = $candidate->save();
-        if ($res) {
-            return back()->with('success', 'Details updated successfully');
-        } else {
-            return back()->with('fail', 'Something went wrong');
+        if (!$user->candidate_id) {
+            return redirect(route('candidate.register'));
         }
+
+        $candidate = Candidate::findOrFail($user->candidate_id);
+        
+        $data = [
+            'candidate' => $candidate,
+            'tab' => $tab
+        ];
+
+        return view('candidate.dashboard', $data);
     }
+
 }

@@ -120,11 +120,13 @@
 
     @include('home.skills')
 
-    <div class="container">
-        <center><h2 class="heading">Recent job openings</h2></center>
-        @include('jobs.list')
-        <a href="{{ route('jobs.list') }}" class="btn btn-primary">See all Jobs</a>
-    </div>
+    @if (Str::length($jobs) != 0)
+        <div class="container">
+            <center><h2 class="heading">Recent job openings</h2></center>
+            @include('jobs.list')
+            <a href="{{ route('jobs.list') }}" class="btn btn-primary">See all Jobs</a>
+        </div>
+    @endif
 
     <x-footer></x-footer>
 
