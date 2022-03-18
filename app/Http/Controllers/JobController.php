@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 
 class JobController extends Controller
 {
     public function createJobPost(Request $request)
     {
-        // return dd($request);
         $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -20,13 +21,15 @@ class JobController extends Controller
             'location_type' => 'required',
             'skills_required' => 'required',
             'experience' => 'required',
-            'total_vacancies' => 'min:0'
+            'total_vacancies' => 'min:0',
+            'category_id' => 'required'
         ]);
 
         $job = new Job();
         $job->title = $request->title;
         $job->title_slug = Str::slug($request->title);
         $job->description = $request->description;
+        $job->category_id = $request->category_id;
         $job->job_type = $request->job_type;
         $job->experience = $request->experience;
         $job->apply_last_date = $request->apply_last_date;
@@ -114,6 +117,22 @@ class JobController extends Controller
             }
         }
         return $companies;
+    }
+
+    public function applyJob($job_id) {
+
+        $application = new Application();
+        $application->job_id = $job_id;
+        $application->candidate_id = Session::get('user')->candidate_id;
+        $application->status = "PENDING";
+
+        $res = $application->save();
+        if ($res) {
+            return back()->with('success', 'You have applied to this Job successfully');
+        } else {
+            return back()->with('fail', 'Something went wrong');
+        }
+        
     }
 }
 // REVIEW, LIVE, CLOSED

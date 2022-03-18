@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
@@ -81,6 +82,19 @@ class CompanyController extends Controller
             'company' => $company,
             'tab' => $tab
         ];
+
+        if ($tab == "create-job") {
+            $data['job_types'] = [
+                'Internship',
+                'Full-time',
+                'Part-time',
+                'Contract',
+                'Temporary',
+                'Volunteer'
+            ];
+            $categories = Category::all();
+            $data['categories'] = $categories;
+        }
         
         if ($tab == "jobs-posted") {
             $jobs = Job::where('company_id', $company->company_id)->latest()->get();

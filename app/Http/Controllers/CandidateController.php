@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidate;
+use App\Models\Job;
 use App\Models\User;
+use App\Models\Application;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -24,7 +27,7 @@ class CandidateController extends Controller
         ]);
 
         $candidate = new Candidate();
-        
+
         $candidate->name = $request->name;
         $candidate->skills = explode(',', $request->skills);
         $candidate->resume_link = $request->resume_link;
@@ -42,7 +45,7 @@ class CandidateController extends Controller
             $user->save();
             // udpate user object in session
             Session::put('user', $user);
-            
+
             return back()->with('success', 'You have registered successfully as Candidate');
         } else {
             return back()->with('fail', 'Something went wrong');
@@ -61,13 +64,36 @@ class CandidateController extends Controller
         }
 
         $candidate = Candidate::findOrFail($user->candidate_id);
-        
+
         $data = [
             'candidate' => $candidate,
             'tab' => $tab
         ];
 
+
+        if ($tab == "applications") {
+            $status = $request->query('status');
+            $jobs = array();
+            if ($status) {
+                $applications = Application::where('candidate_id', $candidate->candidate_id)->where('status', Str::upper($status))->latest()->get();
+            } else {
+                $applications = Application::where('candidate_id', $candidate->candidate_id)->latest()->get();
+            }
+            foreach ($applications as $key => $value) {
+                $job = Job::where('job_id', $value->job_id)->first();
+                $jobs[$value->job_id] = $job;
+            }
+            $data['jobs'] = $jobs;
+            $data['applications'] = $applications;
+        }
+
+        // id('application_id');
+        // unsignedBigInteger('job_id');
+        // unsignedBigInteger('candidate_id');
+        // string('status'); // PENDING(default), ACCEPTED, REJECTED
+        // text('rejection_reason')->nullable();
+        // timestamps();
+
         return view('candidate.dashboard', $data);
     }
-
 }

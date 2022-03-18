@@ -30,10 +30,22 @@
     </div>
 
     <div class="form-group mb-2">
+      <label class="form-label" for="jobTypeInput">Job Category</label>
+      <select class="form-control" id="jobTypeInput" name="category_id" required >
+        <option value={{NULL}}>Choose a category</option>
+        @foreach ($categories as $category)
+          <option value="{{$category->category_id}}">{{ $category->name }}</option>
+        @endforeach
+      </select>
+      <span class="text-danger">@error('category_id') {{$message}} @enderror</span>
+    </div>
+
+    <div class="form-group mb-2">
       <label class="form-label" for="jobTypeInput">What is the Job Type?</label>
       <select class="form-control" id="jobTypeInput" name="job_type" >
-        <option value="Internship">Internship</option>
-        <option value="Full-time">Full-time</option>
+        @foreach ($job_types as $type)
+          <option value="{{$type}}">{{ $type }}</option>
+        @endforeach
       </select>
     </div>
 

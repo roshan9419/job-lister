@@ -1,3 +1,3 @@
 <div class="container py-5">
-  Hello, Candidate Profile
+  Hello, {{ $candidate->name }}!
 </div>

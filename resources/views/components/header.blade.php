@@ -36,16 +36,26 @@
       @component('components.smallphoto', ['url' => session('user')->photo_url])@endcomponent
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-      <li><a style="cursor: pointer;" class="dropdown-item">Profile</a></li>
-      @if (session('user')->company_id)
-      <li>
-        <a style="cursor: pointer;" class="dropdown-item" href="{{ route('company.dashboard') }}">Dashboard</a>
-      </li>
-      @endif
-      @if (session('user')->candidate_id)
-      <li>
-        <a style="cursor: pointer;" class="dropdown-item" href="{{ route('candidate.dashboard') }}">Dashboard</a>
-      </li>
+      @if (!session('user')->company_id && !session('user')->candidate_id)
+        <li>
+          <a style="cursor: pointer;" class="dropdown-item" href="/register">Register</a>
+        </li>
+      @else
+        @if (session('user')->company_id)
+        <li><a style="cursor: pointer;" class="dropdown-item" href="{{ route('company.dashboard', ['tab' => 'profile']) }}">Profile</a></li>
+        <li>
+          <a style="cursor: pointer;" class="dropdown-item" href="{{ route('company.dashboard') }}">Dashboard</a>
+        </li>      
+        @else
+        <li><a style="cursor: pointer;" class="dropdown-item" href="{{ route('candidate.dashboard', ['tab' => 'profile']) }}">Profile</a></li>
+        <li>
+          <a style="cursor: pointer;" class="dropdown-item" href="{{ route('candidate.dashboard') }}">Dashboard</a>
+        </li>
+        <li>
+          <a style="cursor: pointer;" class="dropdown-item" href="{{ route('candidate.dashboard', ['tab' => 'applications']) }}">My Applications</a>
+        </li>      
+        @endif
+      
       @endif
       <li>
         <hr class="dropdown-divider">

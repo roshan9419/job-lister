@@ -48,6 +48,7 @@ Route::get('/company/{name_slug}/profile', [Controllers\HomeController::class, '
 Route::get('/candidate/dashboard', [Controllers\CandidateController::class, 'dashboard'])->name('candidate.dashboard');
 
 // Jobs related routes
+Route::get('/job/{job_id}/apply', [Controllers\JobController::class, 'applyJob'])->name('job.apply');//->middleware(['auth', 'candidate']);
 Route::get('/job/{job_id}/{slug}', [Controllers\JobController::class, 'viewJobPost'])->name('job.view');
 Route::post('/job/create', [Controllers\JobController::class, 'createJobPost'])->name('job.create');
 Route::put('/job/{job_id}/close', [Controllers\JobController::class, 'closeJob'])->name('job.close');
@@ -55,6 +56,3 @@ Route::put('/job/{job_id}/close', [Controllers\JobController::class, 'closeJob']
 // Jobs searching and filtering
 Route::get('/jobs', [Controllers\JobController::class, 'listJobs'])->name('jobs.list');
 Route::get('/jobs/search', [Controllers\JobController::class, 'searchJobs'])->name('jobs.search');
-
-
-//TODO: add middlewares
