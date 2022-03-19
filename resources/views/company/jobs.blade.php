@@ -70,7 +70,11 @@
                             </td>
                             <td>{{ $job->job_type }}</td>
                             <td>
-                                @if ($job->applicants) {{ Str::length($job->applicants) () }} @else 0 @endif
+                                @if ($job->applicants)
+                                    {{ sizeof($job->applicants) }}
+                                @else
+                                    0
+                                @endif
                             </td>
                             <td>{{ $job->job_location }}</td>
                             <td>{{ $job->created_at->diffForHumans() }}</td>

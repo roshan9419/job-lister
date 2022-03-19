@@ -64,7 +64,9 @@
             @if ($user && $user->candidate_id && in_array($user->candidate_id, $applicants))
                 <div class="applied-btn">Applied</div>              
             @else
-                <a href="{{ route('job.apply', ['job_id' => $job->job_id]) }}" class="apply-btn">Apply Now</a>
+                @if (!($user && $user->company_id))
+                    <a href="{{ route('job.apply', ['job_id' => $job->job_id]) }}" class="apply-btn">Apply Now</a>
+                @endif
             @endif
         </div>
         <h3>{{ $job->job_location }} ({{ $job->location_type }})</h3>
@@ -80,6 +82,10 @@
         <div class="description">
             {{ $job->description }}
         </div>
+        <div class="mb-5"></div>
+        @include('components.company-card')
     </div>
+
+    <x-footer></x-footer>
 
 </x-app-layout>
