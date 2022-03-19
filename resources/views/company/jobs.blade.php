@@ -80,7 +80,7 @@
                             <td>{{ $job->created_at->diffForHumans() }}</td>
                             <td>
                                 <div style="display: flex;">
-                                    <span class="btn btn-primary btn-sm" style="margin-right: 2px">Share</span>
+                                    <a href="?tab=applications&job_id={{ $job->job_id }}" class="btn btn-primary btn-sm" style="margin-right: 2px">Responses</a>
                                     @if ($job->status != "CLOSED")
                                         <form action="{{ route('job.close', $job->job_id) }}" method="post">
                                             @csrf

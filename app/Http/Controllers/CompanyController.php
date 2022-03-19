@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
+use App\Models\Candidate;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -99,6 +101,28 @@ class CompanyController extends Controller
         if ($tab == "jobs-posted") {
             $jobs = Job::where('company_id', $company->company_id)->latest()->get();
             $data['jobs'] = $jobs;
+        }
+
+        if ($tab == 'applications') {
+            $job_id = $request->query('job_id');
+            $applications = array();
+            $candidates = array();
+
+            if ($job_id) {
+                $applications = Application::where('job_id', $job_id)->get();
+                $job = Job::where('job_id', $job_id)->first();
+                if (!$job) {
+                    return back()->with('fail', 'Job not found');
+                }
+                $data['job'] = $job;
+            }
+            foreach ($applications as $key => $value) {
+                $candidate = Candidate::where('candidate_id', $value->candidate_id)->first();
+                $candidates[$value->candidate_id] = $candidate;
+            }
+            
+            $data['candidates'] = $candidates;
+            $data['applications'] = $applications;
         }
 
         return view('company.dashboard', $data);

@@ -30,6 +30,12 @@
               Create Job Post
             </a>
           </li>
+          <li>
+            <a href="?tab=applications" class="nav-link text-white {{ $tab == 'applications' ? 'active' : '' }}">
+              {{-- <i class="fa-light fa-building"></i> --}}
+              Applications
+            </a>
+          </li>
         </ul>
         <hr>
         <div class="dropdown pb-4">
@@ -59,6 +65,9 @@
             @break
           @case('create-job')
             @include('company.createjob')
+            @break
+          @case('applications')
+            @include('company.applications')
             @break
         @endswitch
 
