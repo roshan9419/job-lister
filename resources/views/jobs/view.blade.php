@@ -23,6 +23,15 @@
             height: min-content;
         }
 
+        .applied-btn {
+            background: seagreen;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            height: min-content;
+        }
+
         .apply-btn:hover {
             color: rgb(184, 184, 184)
         }
@@ -47,7 +56,16 @@
         @endif
         <div class="heading">
             <span class="title-heading">{{ $job->title }}</span>
-            <a href="{{ route('job.apply', ['job_id' => $job->job_id]) }}" class="apply-btn">Apply Now</a>
+            <?php 
+                $user = Session::get('user');
+                $applicants = $job->applicants;
+                if (!$applicants) $applicants = array();
+            ?>
+            @if ($user && $user->candidate_id && in_array($user->candidate_id, $applicants))
+                <div class="applied-btn">Applied</div>              
+            @else
+                <a href="{{ route('job.apply', ['job_id' => $job->job_id]) }}" class="apply-btn">Apply Now</a>
+            @endif
         </div>
         <h3>{{ $job->job_location }} ({{ $job->location_type }})</h3>
         <div class="mb-5"></div>
