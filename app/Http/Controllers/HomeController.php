@@ -22,7 +22,15 @@ class HomeController extends Controller
         
         
         $skills = array("Flutter", "Python", "Java", "Dart", "Kotlin", "PHP", "PugJs", "NodeJs", "Flutter", "AngularJs", "Laravel", "Bootstrap", "GCP (Google Cloud Platform)", "Firebase", "RestAPIs", "MySQL", "Adobe Xd");
-        return view('home.index', ['jobs' => $jobs, 'skills' => $skills, 'companies' => $companies]);
+        $job_types = [
+            'Internship',
+            'Full-time',
+            'Part-time',
+            'Contract',
+            'Temporary',
+            'Volunteer'
+        ];
+        return view('home.index', ['jobs' => $jobs, 'job_types' => $job_types, 'skills' => $skills, 'companies' => $companies]);
     }
 
     public function listCompanies()

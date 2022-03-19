@@ -106,8 +106,9 @@
                     <input class="search-box" type="text" name="q" placeholder="Job title or keyword" required autocomplete="off">
                     <div class="vertical-bar">.</div>
                     <select class="job-type" name="type">
-                        <option value="Internship">Internship</option>
-                        <option value="Full-time">Full-Time</option>
+                        @foreach ($job_types as $type)
+                            <option value="{{ $type }}">{{ $type }}</option>
+                        @endforeach
                         <option value="All">All</option>
                     </select>
                 </div>
