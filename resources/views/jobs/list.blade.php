@@ -42,7 +42,7 @@
             <small class="text-muted">{{ $job->experience }}yrs - </small>
             <small class="text-muted">{{ $job->job_location }} ({{ $job->location_type }})</small><br>
             @foreach ($job->skills_required as $skill)
-            <span class="skill">{{ $skill }}</span>
+                <span class="skill">{{ $skill }}</span>
             @endforeach
         </div>
     </div>

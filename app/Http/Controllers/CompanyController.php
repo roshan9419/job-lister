@@ -109,6 +109,7 @@ class CompanyController extends Controller
             $candidates = array();
 
             if ($job_id) {
+                // combined search to handle user entering job id of different company
                 $applications = Application::where('job_id', $job_id)->get();
                 $job = Job::where('job_id', $job_id)->first();
                 if (!$job) {

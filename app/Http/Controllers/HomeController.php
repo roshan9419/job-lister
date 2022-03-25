@@ -38,13 +38,4 @@ class HomeController extends Controller
         $companies = Company::all();
         return view('home.companies', ['companies' => $companies]);
     }
-
-    public function companyProfile($name_slug)
-    {
-        $company = Company::where('name_slug', $name_slug)->first();
-        if(!$company) {
-            return redirect(404);
-        }
-        return view('profiles.company', ['company' => $company]);
-    }
 }
