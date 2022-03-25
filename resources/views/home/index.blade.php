@@ -99,11 +99,11 @@
     <div id="lead">
         <div id="lead-content">
             <h2>Seaching for a job?</h2>
-            <h2>Find the <strong>best job</strong> that fit you</h2>
+            <h2>Find the <strong>best job</strong> that fits you</h2>
 
             <form action="{{ route('jobs.search') }}" method="GET">
                 <div class="search-container">
-                    <input class="search-box" type="text" name="q" placeholder="Job title or keyword" required autocomplete="off">
+                    <input class="search-box" type="text" name="q" placeholder="Job title or keyword" autocomplete="off">
                     <div class="vertical-bar">.</div>
                     <select class="job-type" name="type">
                         @foreach ($job_types as $type)
@@ -124,7 +124,14 @@
     @if (sizeof($jobs) != 0)
         <div class="container">
             <center><h2 class="heading">Recent job openings</h2></center>
-            @include('jobs.list')
+            <div class="row mt-3">
+                @foreach ($jobs as $job)
+                    <?php $company = $companies[$job->company_id]; ?>
+                    <div class="col-lg-4 mb-2 pr-lg-1">
+                        @include('jobs.card')
+                    </div>
+                @endforeach
+            </div>
             <a href="{{ route('jobs.list') }}" class="btn btn-primary">See all Jobs</a>
         </div>
     @endif

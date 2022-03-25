@@ -70,7 +70,7 @@ class JobController extends Controller
 
     public function listJobs()
     {
-        $jobs = Job::all();
+        $jobs = Job::paginate(5);
         $companies = $this->getCompaniesData($jobs);
         return view('jobs.list', ['jobs' => $jobs, 'companies' => $companies]);
     }

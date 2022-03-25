@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $jobs = Job::latest()->paginate(5);
+        $jobs = Job::latest()->paginate(9);
         $companies = array();
         foreach ($jobs as $idx => $job) {
             $c_id = $job->company_id;
@@ -19,7 +20,6 @@ class HomeController extends Controller
                 $companies[$c_id] = $company;
             }
         }
-        
         
         $skills = array("Flutter", "Python", "Java", "Dart", "Kotlin", "PHP", "PugJs", "NodeJs", "Flutter", "AngularJs", "Laravel", "Bootstrap", "GCP (Google Cloud Platform)", "Firebase", "RestAPIs", "MySQL", "Adobe Xd");
         $job_types = [
@@ -30,7 +30,15 @@ class HomeController extends Controller
             'Temporary',
             'Volunteer'
         ];
-        return view('home.index', ['jobs' => $jobs, 'job_types' => $job_types, 'skills' => $skills, 'companies' => $companies]);
+        $categories = Category::all();
+
+        return view('home.index', [
+            'jobs' => $jobs,
+            'categories' => $categories,
+            'job_types' => $job_types, 
+            'skills' => $skills, 
+            'companies' => $companies
+        ]);
     }
 
     public function listCompanies()

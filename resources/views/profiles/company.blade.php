@@ -5,77 +5,13 @@
             background: #eee;
             overflow-x: hidden
         }
-
         .profile-head {
             transform: translateY(5rem)
         }
-
         .cover {
             background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
             background-size: cover;
             background-repeat: no-repeat
-        }
-
-        .card {
-            border-radius: 5px
-        }
-        .heading {
-            font-size: 20px;
-            text-decoration: none;
-        }
-
-        .c-details span {
-            font-weight: 300;
-            font-size: 13px
-        }
-
-        .icon img {
-            width: 50px;
-            height: 50px;
-            background-color: #eee;
-            border-radius: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 39px
-        }
-
-        .badge a {
-            background-color: rgba(65, 105, 225, 0.205);
-            width: 60px;
-            height: 25px;
-            border-radius: 5px;
-            display: flex;
-            color: royalblue;
-            justify-content: center;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .progress {
-            height: 8px;
-            border-radius: 10px
-        }
-
-        .progress div {
-            background-color: red
-        }
-
-        .text1 {
-            font-size: 14px;
-            font-weight: 600
-        }
-
-        .text2 {
-            color: #a5aec0
-        }
-        .skill {
-            margin-right: 2px;
-            background: royalblue;
-            color: white;
-            padding: 3px 6px;
-            border-radius: 50px;
-            font-size: 0.6rem;
         }
     </style>
 
@@ -125,31 +61,11 @@
                     <div class="d-flex align-items-center justify-content-between mb-3">
                         <h5 class="mb-0">Recent jobs</h5><a href="#" class="btn btn-link text-muted">View all</a>
                     </div>
-                    @foreach ($recentJobs as $job)
-                    <div class="mb-3">
-                        <div class="card p-2 mb-2">
-                            <div class="d-flex justify-content-between">
-                                <div class="d-flex flex-row align-items-center">
-                                    <div class="icon"> <img src="{{ asset('storage/images/companies/'.$company->name_slug.'.jpg') }}" alt="Company"> </div>
-                                    <div class="ms-2 c-details">
-                                        <strong class="mb-0">{{ $company->name }}</strong><br> <span>{{ $job->created_at->diffForHumans() }}</span>
-                                    </div>
-                                </div>
-                                <?php $user = Session::get('user'); ?>
-                                @if (!($user && $user->company_id))
-                                    <div class="badge"> <a href="{{ route('job.view', [$job->job_id, $job->title_slug]) }}">Apply</a> </div>
-                                @endif
-                            </div>
-                            <div class="mt-2">
-                                <a class="heading" href="{{ route('job.view', [$job->job_id, $job->title_slug]) }}" >{{ $job->title }}</a>
-                                <div class="mt-1"> <span class="text1">{{ $job->job_location }} <span class="text2">({{ $job->location_type }})</span></span> </div>
-                                @foreach ($job->skills_required as $skill)
-                                    <span class="skill">{{ $skill }}</span>
-                                @endforeach
-                            </div>
-                        </div>
+                    <div class="row">
+                        @foreach ($recentJobs as $job)
+                            @include('jobs.card')
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
             </div>
         </div>
