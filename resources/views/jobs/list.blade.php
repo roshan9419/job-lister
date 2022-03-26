@@ -114,7 +114,10 @@
                     
                 </form>
    
-                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-funnel mr-2"></i>
+                    Apply Filters
+                </button>
         </div>
 
         <div class="col-md-10 main-area">
