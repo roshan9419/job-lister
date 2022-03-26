@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\Category;
 use App\Models\Company;
 use App\Models\Job;
 use Illuminate\Http\Request;
@@ -72,7 +73,28 @@ class JobController extends Controller
     {
         $jobs = Job::paginate(5);
         $companies = $this->getCompaniesData($jobs);
-        return view('jobs.list', ['jobs' => $jobs, 'companies' => $companies]);
+        $job_types = [
+            'Internship',
+            'Full-time',
+            'Part-time',
+            'Contract',
+            'Temporary',
+            'Volunteer'
+        ];
+        $location_types = [
+            'Remote',
+            'Hybrid',
+            'On-site'
+        ];
+        $categories = Category::all();
+
+        return view('jobs.list', [
+            'jobs' => $jobs,
+            'categories' => $categories,
+            'job_types' => $job_types,
+            'location_types' => $location_types,
+            'companies' => $companies
+        ]);
     }
 
     public function searchJobs(Request $req)
