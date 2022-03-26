@@ -86,16 +86,9 @@ class CompanyController extends Controller
         ];
 
         if ($tab == "create-job") {
-            $data['job_types'] = [
-                'Internship',
-                'Full-time',
-                'Part-time',
-                'Contract',
-                'Temporary',
-                'Volunteer'
-            ];
-            $categories = Category::all();
-            $data['categories'] = $categories;
+            $data['job_types'] = getJobTypes();
+            $data['location_types'] = getJobLocationTypes();
+            $data['categories'] = Category::all();
         }
         
         if ($tab == "jobs-posted") {

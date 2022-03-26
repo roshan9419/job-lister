@@ -54,7 +54,6 @@ Route::put('/job/{job_id}/close', [Controllers\JobController::class, 'closeJob']
 
 // Jobs searching and filtering
 Route::get('/jobs', [Controllers\JobController::class, 'listJobs'])->name('jobs.list');
-Route::get('/jobs/search', [Controllers\JobController::class, 'searchJobs'])->name('jobs.search');
 
 // Public searching - companies
 Route::get('/company/{name_slug}/profile', [Controllers\PublicProfileController::class, 'company'])->name('company.profile');

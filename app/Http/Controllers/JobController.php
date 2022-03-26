@@ -69,23 +69,13 @@ class JobController extends Controller
         return back()->with('success', 'Job status updated');
     }
 
-    public function listJobs()
+    public function listJobs(Request $req)
     {
-        $jobs = Job::paginate(5);
+        // return dd($req);
+        $jobs = Job::where('status', 'REVIEW')->paginate(5);
         $companies = $this->getCompaniesData($jobs);
-        $job_types = [
-            'Internship',
-            'Full-time',
-            'Part-time',
-            'Contract',
-            'Temporary',
-            'Volunteer'
-        ];
-        $location_types = [
-            'Remote',
-            'Hybrid',
-            'On-site'
-        ];
+        $job_types = getJobTypes();
+        $location_types = getJobLocationTypes();
         $categories = Category::all();
 
         return view('jobs.list', [

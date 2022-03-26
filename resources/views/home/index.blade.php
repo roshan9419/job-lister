@@ -101,9 +101,9 @@
             <h2>Seaching for a job?</h2>
             <h2>Find the <strong>best job</strong> that fits you</h2>
 
-            <form action="{{ route('jobs.search') }}" method="GET">
+            <form action="{{ route('jobs.list') }}" method="GET">
                 <div class="search-container">
-                    <input class="search-box" type="text" name="q" placeholder="Job title or keyword" autocomplete="off">
+                    <input class="search-box" type="text" name="s" placeholder="Job title or keyword" autocomplete="off">
                     <div class="vertical-bar">.</div>
                     <select class="job-type" name="type">
                         @foreach ($job_types as $type)

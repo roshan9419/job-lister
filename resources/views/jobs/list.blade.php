@@ -33,7 +33,7 @@
         .search-container {
             padding: 5px;
             display: flex;
-            justify-content:flex-end;
+            justify-content: space-between;
             border: 1px solid #868686;
             margin-bottom: 25px;
             border-radius: 25px;
@@ -47,8 +47,12 @@
             font-size: 16px;
         }
         .search-btn {
+            display: flex;
             border-radius: 20px;
             padding: 10px 25px;
+        }
+        .search-btn i {
+            margin-right: 5px;
         }
 
         .filter-area {
@@ -77,7 +81,7 @@
 
         <div class="col-md-2 filter-area card">
             
-                <form>
+                <form method="GET" action="{{ route('jobs.list') }}">
                     <div class="filter-block">
                         <div class="filter-label">Job Types</div>
                         <ul>
@@ -92,10 +96,10 @@
     
                     <div class="filter-block">
                         <div class="filter-label">Category</div>
-                        <select class="form-control" name="category">
-                            <option value="">Choose category</option>
+                        <select class="form-control" style="cursor: pointer" name="category">
+                            <option value="{{null}}">Choose category</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->category_id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -112,12 +116,12 @@
                         </ul>
                     </div>
                     
+                    <button type="submit" class="btn btn-primary" style="width:100%">
+                        <i class="bi bi-funnel mr-2"></i>
+                        Apply Filters
+                    </button>
                 </form>
    
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-funnel mr-2"></i>
-                    Apply Filters
-                </button>
         </div>
 
         <div class="col-md-10 main-area">
@@ -126,10 +130,13 @@
                 <h2>Find the <strong>best job</strong> that fits you</h2>
                 {{-- <h5 class="text-muted">Find the <strong>best job</strong> that fits you</h5> --}}
     
-                <form action="{{ route('jobs.search') }}" method="GET">
+                <form action="{{ route('jobs.list') }}" method="GET">
                     <div class="search-container">
-                        <input class="search-box" type="text" name="q" placeholder="Job title or keyword" autocomplete="off">
-                        <button type="submit" class="btn btn-primary search-btn">Search</button>
+                        <input class="search-box" type="text" name="s" placeholder="Job title or keyword" autocomplete="off">
+                        <button type="submit" class="btn btn-primary search-btn">
+                            <i class="bi bi-search"></i>
+                            Search
+                        </button>
                     </div>
                     
                 </form>
@@ -156,9 +163,10 @@
             </div>
             @endforeach
     
-            {{-- <div style="display:inline-flex; margin-left: auto;"> --}}
+            <div style="display:flex; justify-content: space-between;">
+                <div class=""></div>
                 {{ $jobs->links('pagination::bootstrap-4') }}
-            {{-- </div> --}}
+            </div>
         </div>
 
         

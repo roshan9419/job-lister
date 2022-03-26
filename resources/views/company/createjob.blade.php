@@ -59,9 +59,9 @@
           </div>
           <div class="col-4">
             <select class="form-control" id="locationTypeInput" name="location_type" >
-              <option value="Remote">Remote</option>
-              <option value="On-site">On-site</option>
-              <option value="Hybrid">Hybrid</option>
+              @foreach ($location_types as $type)
+                <option value="{{$type}}">{{$type}}</option>
+              @endforeach
             </select>
           </div>
         </div>

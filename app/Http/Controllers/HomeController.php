@@ -22,14 +22,7 @@ class HomeController extends Controller
         }
         
         $skills = array("Flutter", "Python", "Java", "Dart", "Kotlin", "PHP", "PugJs", "NodeJs", "Flutter", "AngularJs", "Laravel", "Bootstrap", "GCP (Google Cloud Platform)", "Firebase", "RestAPIs", "MySQL", "Adobe Xd");
-        $job_types = [
-            'Internship',
-            'Full-time',
-            'Part-time',
-            'Contract',
-            'Temporary',
-            'Volunteer'
-        ];
+        $job_types = getJobTypes();
         $categories = Category::all();
 
         return view('home.index', [
