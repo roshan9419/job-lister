@@ -72,7 +72,21 @@ class JobController extends Controller
     public function listJobs(Request $req)
     {
         // return dd($req);
-        $jobs = Job::where('status', 'REVIEW')->paginate(5);
+        $filterQuery = Job::where('status', 'REVIEW');
+
+        // apply filter
+        if ($req->get('category')) {
+            $filterQuery = $filterQuery->where('category_id', $req->get('category'));
+        }
+        if ($req->get('jobTypes')) {
+            $filterQuery = $filterQuery->whereIn('job_type', $req->get('jobTypes'));
+        }
+        if ($req->get('locationTypes')) {
+            $filterQuery = $filterQuery->whereIn('location_type', $req->get('locationTypes'));
+        }
+
+        $jobs = $filterQuery->paginate(1);
+        
         $companies = $this->getCompaniesData($jobs);
         $job_types = getJobTypes();
         $location_types = getJobLocationTypes();
@@ -81,8 +95,8 @@ class JobController extends Controller
         return view('jobs.list', [
             'jobs' => $jobs,
             'categories' => $categories,
-            'job_types' => $job_types,
-            'location_types' => $location_types,
+            'jobTypes' => $job_types,
+            'locationTypes' => $location_types,
             'companies' => $companies
         ]);
     }

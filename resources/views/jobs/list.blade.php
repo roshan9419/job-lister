@@ -1,4 +1,5 @@
 <x-app-layout>
+    
     <x-header></x-header>
     <style>
         .title {
@@ -75,6 +76,12 @@
             list-style: none;
         }
 
+        @media (max-width: 995px) {
+            .filter-area {
+                display: none;
+            }
+        }
+
     </style>
 
     <div class="row container p-4 mx-auto">
@@ -85,9 +92,10 @@
                     <div class="filter-block">
                         <div class="filter-label">Job Types</div>
                         <ul>
-                            @foreach ($job_types as $type)
+                            @foreach ($jobTypes as $type)
                                 <li class="filter-list-item">
-                                    <input type="checkbox" value="{{ $type }}" name="jobTypes[]">
+                                    <input type="checkbox" value="{{ $type }}" name="jobTypes[]" 
+                                        {{in_array($type, request()->input('jobTypes',[])) ? 'checked' : ''}}>
                                     <label>{{ $type }}</label>
                                 </li>
                             @endforeach
@@ -99,7 +107,10 @@
                         <select class="form-control" style="cursor: pointer" name="category">
                             <option value="{{null}}">Choose category</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->category_id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->category_id }}" 
+                                    {{($category->category_id == request()->input('category',[])) ? 'selected' : ''}}>
+                                    {{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -107,9 +118,10 @@
                     <div class="filter-block">
                         <div class="filter-label">Location</div>
                         <ul>
-                            @foreach ($location_types as $type)
+                            @foreach ($locationTypes as $type)
                                 <li class="filter-list-item">
-                                    <input type="checkbox" value="{{ $type }}" name="locationTypes[]">
+                                    <input type="checkbox" value="{{ $type }}" name="locationTypes[]" 
+                                        {{in_array($type, request()->input('locationTypes',[])) ? 'checked' : ''}}>
                                     <label>{{ $type }}</label>
                                 </li>
                             @endforeach
@@ -165,11 +177,9 @@
     
             <div style="display:flex; justify-content: space-between;">
                 <div class=""></div>
-                {{ $jobs->links('pagination::bootstrap-4') }}
+                {{ $jobs->withQueryString()->links('pagination::bootstrap-4') }}
             </div>
         </div>
-
-        
 
     </div>
 
