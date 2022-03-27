@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Application;
 use App\Models\Category;
 use App\Models\Company;
 use App\Models\Job;
@@ -61,14 +60,6 @@ class JobController extends Controller
         }
     }
 
-    public function closeJob($job_id)
-    {
-        $job = Job::findOrFail($job_id);
-        $job->status = "CLOSED";
-        $job->save();
-        return back()->with('success', 'Job status updated');
-    }
-
     public function listJobs(Request $req)
     {
         // return dd($req);
@@ -86,6 +77,9 @@ class JobController extends Controller
         }
         if ($req->get('s')) {
             $filterQuery = $filterQuery->where('title', 'like', '%' . $req->get('s') . '%');
+        }
+        if ($req->get('company')) {
+            $filterQuery = $filterQuery->where('company_id', $req->get('company'));
         }
 
         $filterQuery = $filterQuery->orderBy('created_at', 'DESC');
@@ -149,40 +143,12 @@ class JobController extends Controller
         return $companies;
     }
 
-    public function applyJob($job_id)
+    public function closeJob($job_id)
     {
-        $candidate_id = Session::get('user')->candidate_id;
-
-        // check if already applied or not
-        $application = Application::where('candidate_id', $candidate_id)->where('job_id', $job_id)->first();
-        if ($application) {
-            return back()->with('fail', "You have already applied for this job");
-        }
-
         $job = Job::findOrFail($job_id);
-
-        $application = new Application();
-        $application->job_id = $job_id;
-        $application->candidate_id = $candidate_id;
-        $application->status = "PENDING";
-
-        $applicants = $job->applicants;
-        if (!$applicants) {
-            $applicants = array();
-        }
-
-        // update applicants list
-        array_push($applicants, $candidate_id);
-        $job->applicants = $applicants;
-
-        $res = $application->save();
+        $job->status = "CLOSED";
         $job->save();
-
-        if ($res) {
-            return redirect(route('candidate.dashboard', ['tab' => 'applications']))->with('success', 'You have been successfully applied for - ' . $job->title);
-        } else {
-            return back()->with('fail', 'Something went wrong');
-        }
+        return back()->with('success', 'Job status updated');
     }
 }
 // REVIEW, LIVE, CLOSED

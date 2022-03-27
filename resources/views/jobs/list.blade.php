@@ -217,9 +217,9 @@
                                     <span>{{ $job->created_at->diffForHumans() }}</span>
                                 </div>
                             </div>
-                            <div class="">
-                                <i class="bi bi-building"></i>
-                                <span class="card-subtitle mb-2 text-muted">{{$companies[$job->company_id]->name}}</span>
+                            <div>
+                                <i style="color: rgb(51, 51, 51)" class="bi bi-building"></i>
+                                <span style="color: rgb(51, 51, 51)" class="card-subtitle mb-2">{{$companies[$job->company_id]->name}}</span>
                             </div>
                             <div class="job-items-row">
                                 <div class="job-item">

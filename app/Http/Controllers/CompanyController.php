@@ -100,21 +100,35 @@ class CompanyController extends Controller
             $job_id = $request->query('job_id');
             $applications = array();
             $candidates = array();
+            $jobs = array();
 
             if ($job_id) {
                 // combined search to handle user entering job id of different company
                 $applications = Application::where('job_id', $job_id)->get();
-                $job = Job::where('job_id', $job_id)->first();
+                $job = Job::find($job_id);
                 if (!$job) {
                     return back()->with('fail', 'Job not found');
                 }
-                $data['job'] = $job;
+                foreach ($applications as $key => $application) {
+                    $candidate = Candidate::find($application->candidate_id);
+                    $candidates[$application->candidate_id] = $candidate;
+                    $jobs[$application->job_id] = $job;
+                }
+            } else {
+                // Costly operation, need to optimized using foreign key concept
+                $jobs_list = Job::where('company_id', $company->company_id)->get();
+                foreach ($jobs_list as $key => $job) {
+                    $applications_list = Application::where('job_id', $job->job_id)->get();
+                    foreach ($applications_list as $key => $application) {
+                        $candidate = Candidate::find($application->candidate_id);
+                        $candidates[$application->candidate_id] = $candidate;
+                        $jobs[$application->job_id] = $job;
+                        array_push($applications, $application);
+                    }
+                }
+             
             }
-            foreach ($applications as $key => $value) {
-                $candidate = Candidate::where('candidate_id', $value->candidate_id)->first();
-                $candidates[$value->candidate_id] = $candidate;
-            }
-            
+            $data['jobs'] = $jobs;
             $data['candidates'] = $candidates;
             $data['applications'] = $applications;
         }

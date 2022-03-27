@@ -37,15 +37,15 @@
         <div class="heading">
             <span class="title-heading">
                 Applications
-                @if (isset($job))
-                    ({{ $job->title }})
+                @if (sizeof($jobs) == 1)
+                    ({{ array_values($jobs)[0]->title }})
                 @endif
             </span>
-            <form action="{{ route('company.dashboard') }}" method="GET" style="display:flex; height:40px">
+            {{-- <form action="{{ route('company.dashboard') }}" method="GET" style="display:flex; height:40px">
                 <input type="hidden" name="tab" value="applications">
                 <input type="text" name="job_id" class="form-control" value="{{ isset($job) ? $job->job_id : '' }}">
                 <input type="submit" value="Search" class="btn btn-primary">
-            </form>
+            </form> --}}
         </div>
         <hr>
         @if(Session::has('success'))
@@ -59,6 +59,9 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        @if (sizeof($jobs) > 1)
+                            <th scope="col">Job Title</th>
+                        @endif
                         <th scope="col">Candidate Name</th>
                         <th scope="col">Links</th>
                         <th scope="col">Contact</th>
@@ -72,6 +75,9 @@
                     @foreach ($applications as $application)
                         <tr>
                             <th scope="row">{{ ++$i }}</th>
+                            @if (sizeof($jobs) > 1)
+                                <td><a href="{{ route('job.view', [$application->job_id, $jobs[$application->job_id]->title_slug]) }}" class="job-title max-1-line">{{ $jobs[$application->job_id]->title }}</a></td>
+                            @endif
                             <td><a class="job-title max-1-line">{{ $candidates[$application->candidate_id]->name }}</a></td>
                             <td><a class="job-title max-1-line" href="{{ $candidates[$application->candidate_id]->resume_link }}" target="_blank">Resume</a></td>
                             <td>{{ $candidates[$application->candidate_id]->contact_number }}</td>
@@ -95,5 +101,3 @@
         </div>
     </div>
 </section>
-
-$table->string('website')->nullable();
