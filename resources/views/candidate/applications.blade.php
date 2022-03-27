@@ -60,7 +60,7 @@
                             <td><a class="job-title max-1-line" href="{{ route('job.view', ['job_id' => $application->job_id, 'slug' => $jobs[$application->job_id]->title_slug]) }}">{{ $jobs[$application->job_id]->title }}</a></td>
                             <td>
                                 <span style="color: white"
-                                    class="badge rounded-pill {{ $application->status == "PENDING" ? 'bg-primary' : ''}} {{ $application->status == "ACCEPTED" ? 'bg-success' : ''}} {{ $application->status == "REJECTED" ? 'bg-secondary' : ''}}" >
+                                    class="badge rounded-pill {{ $application->status == "PENDING" ? 'bg-primary' : ''}} {{ $application->status == "ACCEPTED" ? 'bg-success' : ''}} {{ $application->status == "REJECTED" ? 'bg-danger' : ''}}" >
                                     {{ $application->status }}
                                 </span>
                             </td>

@@ -55,7 +55,7 @@ class ApplicationController extends Controller
 
         $application = Application::find($application_id);
         
-        $application->status = $action;
+        $application->status = $action == 'ACCEPT' ? 'ACCEPTED' : 'REJECTED';
         if ($req->rejection_reason) {
             $application->rejection_reason = $req->rejection_reason;
         }

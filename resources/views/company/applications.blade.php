@@ -82,16 +82,25 @@
                             <td><a class="job-title max-1-line" href="{{ $candidates[$application->candidate_id]->resume_link }}" target="_blank">Resume</a></td>
                             <td>{{ $candidates[$application->candidate_id]->contact_number }}</td>
                             <td>
-                                <span style="color: white"
-                                    class="badge rounded-pill {{ $application->status == "PENDING" ? 'bg-primary' : ''}} {{ $application->status == "ACCEPTED" ? 'bg-success' : ''}} {{ $application->status == "REJECTED" ? 'bg-secondary' : ''}}" >
+                                <span class="badge rounded-pill {{ $application->status == "PENDING" ? 'bg-primary' : ''}} {{ $application->status == "ACCEPTED" ? 'bg-success' : ''}} {{ $application->status == "REJECTED" ? 'bg-danger' : ''}}">
                                     {{ $application->status }}
                                 </span>
                             </td>
                             <td>{{ $application->created_at->diffForHumans() }}</td>
                             <td>
                                 <div style="display: flex; justify-content:right">
-                                    <a href="" class="btn btn-primary btn-sm" style="margin-right: 2px">Accept</a>
-                                    <a href="" class="btn btn-danger btn-sm" style="margin-right: 2px">Reject</a>
+                                    <form action="{{ route('application.action', $application->application_id) }}" method="post">
+                                        @csrf
+                                        @method("PUT")
+                                        <input type="hidden" name="action" value="ACCEPT">
+                                        <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 2px">Accept</button>
+                                    </form>
+                                    <form action="{{ route('application.action', $application->application_id) }}" method="post">
+                                        @csrf
+                                        @method("PUT")
+                                        <input type="hidden" name="action" value="REJECT">
+                                        <button type="submit" class="btn btn-danger btn-sm" style="margin-right: 2px">Reject</button>
+                                    </form>
                                 </div>
                             </td>
                         </tr>
