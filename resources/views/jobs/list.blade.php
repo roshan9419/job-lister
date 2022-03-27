@@ -2,14 +2,29 @@
     
     <x-header></x-header>
     <style>
-        .title {
-            text-decoration: none;
-            font-size: 1rem;
+        .job-card-header {
+            display: flex;
+            justify-content: space-between;
         }
-
-        .card-subtitle {
-            font-size: 0.9rem;
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+        .job-title {
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: rgb(37, 37, 37);
+        }
+        .date-ago {
+            height: 25px;
+            background: rgba(65, 105, 225, 0.205);
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            color: royalblue;
+            display: block;
+            width: max-content;
+            white-space: nowrap;
+        }
+        .date-ago i {
+            color: royalblue;
         }
 
         .skill {
@@ -17,7 +32,7 @@
             background: royalblue;
             color: white;
             padding: 3px 6px;
-            border-radius: 50px;
+            border-radius: 5px;
             font-size: 0.7rem;
         }
 
@@ -26,9 +41,38 @@
             height: 50px;
             margin-right: 10px;
         }
-
-        .card-body {
+        .job-card {
+            padding: 20px;
+            text-decoration: none;
+            transition: 100ms ease-in-out;
+        }
+        .job-card:hover {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.07), 
+                0 2px 4px rgba(0,0,0,0.07), 
+                0 4px 8px rgba(0,0,0,0.07), 
+                0 8px 16px rgba(0,0,0,0.07);
+        }
+        .job-card-body {
             display: flex;
+            /* background: #f59a9a; */
+        }
+        .job-items-row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .job-item {
+            margin-right: 20px;
+        }
+        .job-item i {
+            color: rgb(85, 85, 85);
+        }
+        .job-desc {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            line-clamp: 1;
+            -webkit-box-orient: vertical;
         }
 
         .search-container {
@@ -144,7 +188,8 @@
     
                 <form action="{{ route('jobs.list') }}" method="GET">
                     <div class="search-container">
-                        <input class="search-box" type="text" name="s" placeholder="Job title or keyword" autocomplete="off">
+                        <input class="search-box" type="text" name="s" placeholder="Job title or keyword" autocomplete="off"
+                            value="{{ request()->input('s') }}" required>
                         <button type="submit" class="btn btn-primary search-btn">
                             <i class="bi bi-search"></i>
                             Search
@@ -154,25 +199,57 @@
                 </form>
     
             </div>
-    
+
+            @if (sizeof($jobs) == 0)
+                @component('components.no-results', ['word' => request()->input('s')]) @endcomponent    
+            @endif
+
             @foreach ($jobs as $job)
-            <div class="card mb-3">
-                <div class="card-body">
-                    <img class="company-logo"
-                        src="{{ asset('storage/images/companies/'.$companies[$job->company_id]->name_slug.'.jpg') }}"
-                        alt="">
-                    <div class="content">
-                        <a href="{{ route('job.view', [$job->job_id, $job->title_slug]) }}" class="title">{{ $job->title
-                            }}</a>
-                        <h6 class="card-subtitle mb-2 text-muted">{{$companies[$job->company_id]->name}}</h6>
-                        <small class="text-muted">{{ $job->experience }}yrs - </small>
-                        <small class="text-muted">{{ $job->job_location }} ({{ $job->location_type }})</small><br>
-                        @foreach ($job->skills_required as $skill)
-                         <span class="skill">{{ $skill }}</span>
-                        @endforeach
+                <a class="job-card card mb-3" href="{{ route('job.view', [$job->job_id, $job->title_slug]) }}">
+                    <div class="job-card-body">
+                        <img class="company-logo"
+                            src="{{ asset('storage/images/companies/'.$companies[$job->company_id]->name_slug.'.jpg') }}" alt="">
+                        <div class="content">
+                            <div class="job-card-header">
+                                <h4 class="job-title">{{ $job->title }}</h4>
+                                <div class="date-ago">
+                                    <i class="bi bi-clock"></i>
+                                    <span>{{ $job->created_at->diffForHumans() }}</span>
+                                </div>
+                            </div>
+                            <div class="">
+                                <i class="bi bi-building"></i>
+                                <span class="card-subtitle mb-2 text-muted">{{$companies[$job->company_id]->name}}</span>
+                            </div>
+                            <div class="job-items-row">
+                                <div class="job-item">
+                                    <i class="bi bi-briefcase"></i>
+                                    <small class="text-muted">{{ $job->job_type }}</small>
+                                </div>
+                                <div class="job-item">
+                                    <i class="bi bi-bag"></i>
+                                    <small class="text-muted">{{ $job->experience }} Yrs</small>
+                                </div>
+                                <div class="job-item">
+                                    <i class="bi bi-people"></i>
+                                    <small class="text-muted">{{ $job->applicants ? sizeof($job->applicants) : 0 }} Applicants</small>
+                                </div>
+                                <div class="job-item">
+                                    <i class="bi bi-geo-alt"></i>
+                                    <small class="text-muted">{{ $job->job_location }} ({{ $job->location_type }})</small>
+                                </div>
+                            </div>
+                            <div class="job-item job-desc">
+                                <i class="bi bi-file-earmark-text"></i>
+                                <small class="text-muted">{{ $job->description }}</small>
+                            </div>
+                            <div class="mb-2"></div>
+                            @foreach ($job->skills_required as $skill)
+                                <span class="skill">{{ $skill }}</span>
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-            </div>
+                </a>
             @endforeach
     
             <div style="display:flex; justify-content: space-between;">

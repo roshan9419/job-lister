@@ -84,9 +84,13 @@ class JobController extends Controller
         if ($req->get('locationTypes')) {
             $filterQuery = $filterQuery->whereIn('location_type', $req->get('locationTypes'));
         }
+        if ($req->get('s')) {
+            $filterQuery = $filterQuery->where('title', 'like', '%' . $req->get('s') . '%');
+        }
 
-        $jobs = $filterQuery->paginate(1);
-        
+        $filterQuery = $filterQuery->orderBy('created_at', 'DESC');
+        $jobs = $filterQuery->paginate(5);
+
         $companies = $this->getCompaniesData($jobs);
         $job_types = getJobTypes();
         $location_types = getJobLocationTypes();
@@ -161,7 +165,7 @@ class JobController extends Controller
         $application->job_id = $job_id;
         $application->candidate_id = $candidate_id;
         $application->status = "PENDING";
-        
+
         $applicants = $job->applicants;
         if (!$applicants) {
             $applicants = array();
