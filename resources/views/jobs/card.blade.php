@@ -57,7 +57,7 @@
     <div class="card p-3 mb-2">
         <div class="d-flex justify-content-between">
             <div class="d-flex flex-row align-items-center">
-                <div class="icon"> <img src="{{ asset('storage/images/companies/'.$company->name_slug.'.jpg') }}" alt="Company"> </div>
+                <div class="icon"> <img src="{{ asset('storage/images/companies/'.$company->name_slug.'.jpg') }}" alt="{{$company->name}}"> </div>
                 <div class="ms-2 c-details">
                     <a href="{{ route('company.profile', ['name_slug' => $company->name_slug]) }}" class="company-name mb-0">{{ $company->name }}</a><br> <span>{{ $job->created_at->diffForHumans() }}</span>
                 </div>

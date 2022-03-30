@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-9">
             <strong class="card-title"><a href="{{ route('company.profile', ['name_slug' => $company->name_slug]) }}">{{ $company->name }}</a></strong><br>
-            <small class="text-muted">{{$company->state}}, {{$company->country}}</small>
+            <i class="bi bi-geo-alt" style="font-size: 12px"></i><small class="text-muted">{{$company->state}}, {{$company->country}}</small>
             <p class="about">{{ $company->about }}</p>
             <a href="{{ route('jobs.list', ['company' => $company->company_id]) }}" class="btn btn-primary btn-sm">View all Jobs</a>
         </div>

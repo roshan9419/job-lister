@@ -41,26 +41,42 @@
             z-index: 1;
         }
 
-        .btn-rounded-white {
+        .btn-rounded {
             display: inline-block;
-            color: #fff;
             padding: 15px 25px;
-            border: 3px solid #fff;
-            background: transparent;
             border-radius: 30px;
             transition: 0.5s ease all;
+            text-decoration: none;
+        }
+
+        .btn-rounded-white {
+            color: #fff;
+            border: 3px solid #fff;
+            background: transparent;
         }
 
         .btn-rounded-white:hover {
             color: #3498db;
             background: #fff;
+        }
+
+        .btn-rounded-blue {
+            color: #3498db;
+            border: 3px solid #3498db;
+            background: transparent;
+            padding: 10px 25px;
+        }
+
+        .btn-rounded-blue:hover {
+            color: #fff;
+            background: #3498db;
             text-decoration: none;
         }
 
         .search-container {
             padding: 15px;
             display: flex;
-            justify-content:flex-end;
+            justify-content: flex-end;
             outline: none;
             margin-top: 50px;
             margin-bottom: 20px;
@@ -72,6 +88,7 @@
             outline: none;
             border: none;
             width: 100%;
+            text-align: center
         }
 
         .job-type {
@@ -92,6 +109,21 @@
 
         .heading {
             color: #374054;
+            text-align: center;
+        }
+
+        .companies-area {
+            margin-top: 20px;
+            justify-content: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .top-company-item img {
+            width: 150px;
+            height: 150px;
+            border-radius: 20px;
+            box-shadow: 5px 5px rgba(182, 182, 182, 0.082);
         }
     </style>
 
@@ -103,16 +135,17 @@
 
             <form action="{{ route('jobs.list') }}" method="GET">
                 <div class="search-container">
-                    <input class="search-box" type="text" name="s" placeholder="Job title or keyword" autocomplete="off">
-                    <div class="vertical-bar">.</div>
+                    <input class="search-box" type="text" name="s" placeholder="Search using Job title or keyword..."
+                        autocomplete="off">
+                    {{-- <div class="vertical-bar">.</div>
                     <select class="job-type" name="type">
                         @foreach ($job_types as $type)
-                            <option value="{{ $type }}">{{ $type }}</option>
+                        <option value="{{ $type }}">{{ $type }}</option>
                         @endforeach
                         <option value="All">All</option>
-                    </select>
+                    </select> --}}
                 </div>
-                <button type="submit" class="btn-rounded-white">Search Job</button>
+                <button type="submit" class="btn-rounded btn-rounded-white">Search Job</button>
             </form>
 
         </div>
@@ -122,19 +155,33 @@
     @include('home.skills')
 
     @if (sizeof($jobs) != 0)
-        <div class="container">
-            <center><h2 class="heading">Recent job openings</h2></center>
-            <div class="row mt-3">
-                @foreach ($jobs as $job)
-                    <?php $company = $companies[$job->company_id]; ?>
-                    <div class="col-lg-4 mb-2 pr-lg-1">
-                        @include('jobs.card')
-                    </div>
-                @endforeach
+    <div class="container">
+        <h2 class="heading">Recent job openings</h2>
+        <div class="row mt-3">
+            @foreach ($jobs as $job)
+            <?php $company = $companies[$job->company_id]; ?>
+            <div class="col-lg-4 mb-2 pr-lg-1">
+                @include('jobs.card')
             </div>
-            <a href="{{ route('jobs.list') }}" class="btn btn-primary">See all Jobs</a>
+            @endforeach
         </div>
+        <a href="{{ route('jobs.list') }}" class="btn-rounded btn-rounded-blue">See all Jobs</a>
+    </div>
     @endif
+
+{{-- 
+    <div class="container">
+        <h2 class="heading mt-5">Companies registered in {{ config('app.name', 'JobLister') }}</h2>
+
+        <div class="companies-area">
+            @foreach ($topCompanies as $company)
+                <a class="top-company-item" href="{{ route('company.profile', ['name_slug' => $company->name_slug]) }}"> 
+                    <img src="{{ asset('storage/images/companies/'.$company->name_slug.'.jpg') }}" alt="{{$company->name}}">
+                </a>
+            @endforeach
+        </div>
+            
+    </div> --}}
 
     <x-footer></x-footer>
 

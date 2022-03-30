@@ -1,17 +1,3 @@
-{{-- <div class="card text-center mt-3">
-  <div class="card-header">
-    Job Lister
-  </div>
-  <div class="card-body">
-    <h5 class="card-title">Special title treatment</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-    <a href="#" class="btn btn-primary">Go somewhere</a>
-  </div>
-  <div class="card-footer text-muted">
-    Copyright 2022
-  </div>
-</div> --}}
-
 <style>
   .footer-dark {
     padding: 50px 0;
@@ -113,29 +99,27 @@
         <div class="col-sm-6 col-md-3 item">
           <h3>Services</h3>
           <ul>
-            <li><a href="#">Web design</a></li>
-            <li><a href="#">Development</a></li>
-            <li><a href="#">Hosting</a></li>
+            <li><a href="/jobs">View Jobs</a></li>
+            {{-- <li><a href="/company/dashboard?tab=create-job">Create Job</a></li> --}}
+            <li><a href="#">Products</a></li>
           </ul>
         </div>
         <div class="col-sm-6 col-md-3 item">
           <h3>About</h3>
           <ul>
-            <li><a href="#">Company</a></li>
-            <li><a href="#">Team</a></li>
-            <li><a href="#">Careers</a></li>
+            <li><a href="/about">Team</a></li>
+            <li><a href="mailto:joblister@gmail.com">Contact</a></li>
           </ul>
         </div>
         <div class="col-md-6 item text">
           <h3>{{ config('app.name', 'JobLister') }}</h3>
-          <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus
-            elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p>
+          <p>Job listing portal where candidates can easily search jobs, apply, and manage applied applications. 
+            Companies can organization can create job posts, manage candidate applications.</p>
         </div>
         <div class="col item social">
-          <a href="#"><i class="bi bi-facebook"></i></a>
-          <a href="#"><i class="bi bi-twitter"></i></a>
-          <a href="#"><i class="bi bi-snapchat"></i></a>
-          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="https://github.com/roshan9419"><i class="bi bi-github"></i></a>
+          <a href="https://www.linkedin.com/in/roshank9419/"><i class="bi bi-linkedin"></i></a>
+          <a href="https://twitter.com/RoshanK70963497"><i class="bi bi-twitter"></i></a>
         </div>
       </div>
       <p class="copyright">{{ config('app.name', 'JobLister') }} © 2022</p>

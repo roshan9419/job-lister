@@ -20,15 +20,10 @@ class HomeController extends Controller
                 $companies[$c_id] = $company;
             }
         }
-        
         $skills = array("Flutter", "Python", "Java", "Dart", "Kotlin", "PHP", "PugJs", "NodeJs", "Flutter", "AngularJs", "Laravel", "Bootstrap", "GCP (Google Cloud Platform)", "Firebase", "RestAPIs", "MySQL", "Adobe Xd");
-        $job_types = getJobTypes();
-        $categories = Category::all();
 
         return view('home.index', [
             'jobs' => $jobs,
-            'categories' => $categories,
-            'job_types' => $job_types, 
             'skills' => $skills, 
             'companies' => $companies
         ]);

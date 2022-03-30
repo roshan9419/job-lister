@@ -15,6 +15,9 @@ use App\Http\Controllers;
 */
 
 Route::get('/', [Controllers\HomeController::class, 'index']);
+Route::get('/about', function () {
+    return view('home.about');
+});
 
 // Auth routes
 Route::get('/auth/login', [Controllers\AuthController::class, 'googleLogin'])->name('auth.login');
@@ -40,11 +43,11 @@ Route::middleware('auth')->prefix('/register')->group(function () {
 
 
 // Company related routes
-Route::get('/company/dashboard', [Controllers\CompanyController::class, 'dashboard'])->name('company.dashboard');
+Route::get('/company/dashboard', [Controllers\CompanyController::class, 'dashboard'])->name('company.dashboard')->middleware(['auth']);
 Route::get('/companies', [Controllers\HomeController::class, 'listCompanies'])->name('companies.list');
 
 // Candidate related routes
-Route::get('/candidate/dashboard', [Controllers\CandidateController::class, 'dashboard'])->name('candidate.dashboard');
+Route::get('/candidate/dashboard', [Controllers\CandidateController::class, 'dashboard'])->name('candidate.dashboard')->middleware(['auth']);
 
 // Jobs related routes
 Route::get('/job/{job_id}/{slug}', [Controllers\JobController::class, 'viewJobPost'])->name('job.view');
