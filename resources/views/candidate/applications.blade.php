@@ -36,7 +36,7 @@
     <div class="container">
         <div class="heading">
             <span class="title-heading">My Applications</span>
-            <a href="/" class="create-btn">Find Jobs</a>
+            <a href="/jobs" class="create-btn">Find Jobs</a>
         </div>
         <hr>
         @if(Session::has('success'))
