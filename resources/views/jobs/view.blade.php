@@ -64,8 +64,12 @@
             @if ($user && $user->candidate_id && in_array($user->candidate_id, $applicants))
                 <div class="applied-btn">Applied</div>              
             @else
-                @if (!($user && $user->company_id))
-                    <a href="{{ route('job.apply', ['job_id' => $job->job_id]) }}" class="apply-btn">Apply Now</a>
+                @if ($job->status == "CLOSED")
+                    <div class="job-closed mt-2" style="color: red">No longer accepting responses!</div>    
+                @else
+                    @if (!($user && $user->company_id))
+                        <a href="{{ route('job.apply', ['job_id' => $job->job_id]) }}" class="apply-btn">Apply Now</a>
+                    @endif
                 @endif
             @endif
         </div>

@@ -63,7 +63,7 @@ class JobController extends Controller
     public function listJobs(Request $req)
     {
         // return dd($req);
-        $filterQuery = Job::where('status', 'REVIEW');
+        $filterQuery = Job::where('status', 'LIVE');
 
         // apply filter
         if ($req->get('category')) {
@@ -102,7 +102,7 @@ class JobController extends Controller
     public function searchJobs(Request $req)
     {
 
-        $jobs = Job::where('status', 'REVIEW')->latest()->get();
+        $jobs = Job::where('status', 'LIVE')->latest()->get();
         if ($req->has('q')) {
             $query =  strtolower($req->get('q'));
             $jobs = $jobs->filter(function ($job) use ($query) {
@@ -143,12 +143,17 @@ class JobController extends Controller
         return $companies;
     }
 
-    public function closeJob($job_id)
+    public function updateStatus(Request $req, $job_id)
     {
         $job = Job::findOrFail($job_id);
-        $job->status = "CLOSED";
+
+        if ($req->has('live')) $job->status = "LIVE";
+        if ($req->has('close')) $job->status = "CLOSED";
+
         $job->save();
         return back()->with('success', 'Job status updated');
     }
+
+    
 }
 // REVIEW, LIVE, CLOSED

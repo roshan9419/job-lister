@@ -67,7 +67,7 @@
                         <th scope="col">Contact</th>
                         <th scope="col">Status</th>
                         <th scope="col">Applied Date</th>
-                        <th scope="col" style="text-align:right">Action</th>
+                        <th scope="col" style="text-align:right">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -89,18 +89,22 @@
                             <td>{{ $application->created_at->diffForHumans() }}</td>
                             <td>
                                 <div style="display: flex; justify-content:right">
-                                    <form action="{{ route('application.action', $application->application_id) }}" method="post">
-                                        @csrf
-                                        @method("PUT")
-                                        <input type="hidden" name="action" value="ACCEPT">
-                                        <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 2px">Accept</button>
-                                    </form>
-                                    <form action="{{ route('application.action', $application->application_id) }}" method="post">
-                                        @csrf
-                                        @method("PUT")
-                                        <input type="hidden" name="action" value="REJECT">
-                                        <button type="submit" class="btn btn-danger btn-sm" style="margin-right: 2px">Reject</button>
-                                    </form>
+                                    @if ($application->status == 'PENDING' || $application->status == 'REJECTED')
+                                        <form action="{{ route('application.action', $application->application_id) }}" method="post">
+                                            @csrf
+                                            @method("PUT")
+                                            <input type="hidden" name="action" value="ACCEPT">
+                                            <button type="submit" class="btn btn-success btn-sm" style="margin-right: 2px"><i class="bi bi-file-earmark-check"></i> Accept</button>
+                                        </form>
+                                    @endif
+                                    @if ($application->status == 'PENDING' || $application->status == 'ACCEPTED')
+                                        <form action="{{ route('application.action', $application->application_id) }}" method="post">
+                                            @csrf
+                                            @method("PUT")
+                                            <input type="hidden" name="action" value="REJECT">
+                                            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-x-square"></i> Reject</button>
+                                        </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

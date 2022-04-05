@@ -54,7 +54,7 @@ Route::get('/job/{job_id}/apply', [Controllers\ApplicationController::class, 'ap
 Route::put('/application/{application_id}/action', [Controllers\ApplicationController::class, 'action'])->name('application.action')->middleware(['auth']);
 
 // Jobs related routes
-Route::put('/job/{job_id}/close', [Controllers\JobController::class, 'closeJob'])->name('job.close');
+Route::put('/job/{job_id}/status', [Controllers\JobController::class, 'updateStatus'])->name('job.updateStatus');
 Route::get('/job/{job_id}/{slug}', [Controllers\JobController::class, 'viewJobPost'])->name('job.view');
 Route::post('/job/create', [Controllers\JobController::class, 'createJobPost'])->name('job.create');
 

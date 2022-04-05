@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $jobs = Job::latest()->paginate(9);
+        $jobs = Job::where('status', 'LIVE')->latest()->paginate(9);
         $companies = array();
         foreach ($jobs as $idx => $job) {
             $c_id = $job->company_id;
