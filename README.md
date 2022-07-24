@@ -48,7 +48,7 @@ copy .env.example .env
 php artisan key:generate
 ```
 
-5. Migrate the tables into database
+5. Migrate the tables into database (Make sure you have done below Environment > Database configurations)
 ```sh
 php artisan migrate
 ```
