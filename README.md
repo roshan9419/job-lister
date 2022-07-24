@@ -53,7 +53,12 @@ php artisan key:generate
 php artisan migrate
 ```
 
-6. Run / Serve the project locally
+6. Link to storage
+```sh
+php artisan storage:link
+```
+
+7. Run / Serve the project locally
 ```sh
 php artisan serve
 ````
