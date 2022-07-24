@@ -55,7 +55,7 @@ php artisan migrate
 
 6. Run / Serve the project locally
 ```sh
-php aritsan serve
+php artisan serve
 ````
 
 ## Environment
@@ -75,7 +75,7 @@ DB_PASSWORD=123456      # database password if any
 - Give the name e.g., *web-client-local*
 - Click on **ADD URI** button under **Authorised JavaScript origins** section and paste the localhost url http://127.0.0.1:8000
 - Click on **ADD URI** button under **Authorised redirect URIs** section and paste the redirect url http://127.0.0.1:8000/auth/google/callback (it will be used when user Sign In successfully)
-- Finally create by clicking on **Save** button
+- Finally create by clicking on **Create** button
 - Copy the **Client ID** and **Client Secret** and update the below variables
 ```sh
 GOOGLE_CLIENT_ID="Client ID"
